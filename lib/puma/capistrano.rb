@@ -32,7 +32,7 @@ Capistrano::Configuration.instance.load do
         run "cd #{current_path} && #{pumactl_cmd} -S #{state_path} restart"
       rescue Capistrano::CommandError => ex
         puts "Failed to restart puma: #{ex}\nAssuming not started."
-        run "cd #{current_path} && #{puma_cmd} #{start_options}", :pty => false
+        run "cd #{current_path} && #{puma_cmd} -q -d -e #{puma_env} -C ./config/puma/#{puma_env}.rb", :pty => false
       end
     end
 
